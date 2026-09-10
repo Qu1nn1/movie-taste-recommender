@@ -222,3 +222,5 @@ dbt_packages/
 logs/
 .env
 *.duckdb
+data/raw/
+dbt_internal_packages/

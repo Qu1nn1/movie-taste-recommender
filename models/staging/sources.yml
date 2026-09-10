@@ -1,0 +1,48 @@
+version: 2
+
+sources: 
+  - name: raw
+    tables:
+      - name: letterboxd_ratings
+        meta:
+          external_location: "data/raw/letterboxd/ratings.csv"
+        columns:
+          - name: Rating
+            data_tests:
+              - not_null
+      - name: movielens_movies
+        meta:
+          external_location: "data/raw/movielens/movies.csv"
+        columns:
+          - name: movieId
+            data_tests:
+              - not_null
+              - unique
+      - name: movielens_ratings
+        meta:
+          external_location: "data/raw/movielens/ratings.csv"
+        columns:
+          - name: userId
+            data_tests:
+              - not_null
+          - name: movieId
+            data_tests:
+              - not_null
+      - name: movielens_links
+        meta:
+          external_location: "data/raw/movielens/links.csv"
+        columns:
+          - name: movieId
+            data_tests:
+              - not_null
+              - unique
+          - name: imdbId
+            data_tests:
+              - not_null
+              - unique
+          - name: tmdbId
+            data_tests:
+              - not_null
+              - unique
+
+    
