@@ -3,8 +3,12 @@ with clean as (
         movieId as movielens_movie_id,
         title,
         genres,
-        regexp_extract(title, '\((\d{4})\)$', 1)::int as movie_year,
-        trim(regexp_replace(title, '\(\d{4}\)$', '')) as title_no_year
+        case
+            when regexp_extract(trim(title), '\((\d{4})\)$', 1) != ''
+            then regexp_extract(trim(title), '\((\d{4})\)$', 1)::int
+        else null
+        end as movie_year,
+        trim(regexp_replace(trim(title), '\(\d{4}\)$', '')) as title_no_year
     from {{ source('raw', 'movielens_movies') }}
 )
 select
