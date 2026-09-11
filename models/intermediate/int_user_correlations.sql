@@ -17,14 +17,25 @@ shared_ratings as (
     from {{ ref('stg_movielens_ratings') }} r
     join my_ratings mr
     on r.movielens_movie_id = mr.movielens_movie_id
+),
+
+average_ratings as (
+    select
+        movielens_user_id,
+        avg(rating) as their_avg_rating
+    from {{ ref('stg_movielens_ratings') }}
+    group by movielens_user_id
 )
 
 select
-    movielens_user_id,
-    corr(their_rating, my_rating) as correlation,
-    count(*) as shared_movie_count
-from shared_ratings
-group by movielens_user_id
+    sr.movielens_user_id,
+    corr(sr.their_rating, sr.my_rating) as correlation,
+    count(*) as shared_movie_count,
+    ar.their_avg_rating
+from shared_ratings sr
+join average_ratings ar
+on sr.movielens_user_id = ar.movielens_user_id
+group by sr.movielens_user_id, ar.their_avg_rating
 having count(*) >= 50
 and not isnan(corr(their_rating, my_rating))
 order by correlation desc
