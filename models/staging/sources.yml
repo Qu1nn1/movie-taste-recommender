@@ -29,21 +29,5 @@ sources:
           - name: movieId
             data_tests:
               - not_null
-      - name: movielens_links
-        meta:
-          external_location: "data/raw/movielens/links.csv"
-        columns:
-          - name: movieId
-            data_tests:
-              - not_null
-              - unique
-          - name: imdbId
-            data_tests:
-              - not_null
-              - unique
-          - name: tmdbId
-            data_tests:
-              - not_null
-              - unique
 
     
