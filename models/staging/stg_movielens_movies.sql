@@ -22,3 +22,4 @@ select
         else title_no_year
     end as movie_title
 from clean
+qualify count(*) over (partition by movie_title, movie_year) = 1

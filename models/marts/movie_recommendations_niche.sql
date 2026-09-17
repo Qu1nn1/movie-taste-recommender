@@ -34,7 +34,7 @@ weighted_residuals as (
     from avg_movie_ratings amr
     join their_rated_movies trm
     on amr.movielens_movie_id = trm.movielens_movie_id
-    where residual_correlation > 0
+    where trm.residual_correlation > 0
     group by amr.movielens_movie_id
 )
 
